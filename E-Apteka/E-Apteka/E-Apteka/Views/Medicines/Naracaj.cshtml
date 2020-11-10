@@ -1,0 +1,19 @@
+﻿@model E_Apteka.Models.Pharmacy
+
+@{
+    ViewBag.Title = "Нарачај";
+}
+
+<h2>Одберете аптека<h2>
+
+@using (Html.BeginForm("Naracaj", "Medicines"))
+{
+<div class="form-group">
+    @Html.DropDownListFor(m => m.selectedPharmacy, new SelectList(Model.pharmacies), new { @class = "form-control" })
+</div>
+    E_Apteka.Models.OrderItem o = new E_Apteka.Models.OrderItem();
+    @Html.Hidden(o.Id.ToString());
+    <button type="submit" class="btn btn-success">Нарачај</button>
+}
+
+    

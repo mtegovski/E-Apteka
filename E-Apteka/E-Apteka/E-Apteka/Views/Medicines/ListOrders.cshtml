@@ -1,0 +1,25 @@
+﻿@using E_Apteka.Models
+@model IEnumerable<Order>
+@{
+    ViewBag.Title = "ListOrders";
+}
+
+<h2>Листа на нарачки</h2>
+<br />
+
+@*@Html.BeginForm("ListOrders", "Medicines") {*@
+    @foreach(var item in Model)
+    {
+        <div>
+            <p>Нарачка бр. @item.orderId</p>
+            <p>Аптека за која е направена нарачката: @item.pharmacy</p>
+            <p>Листа на лекови кои се нарачани: </p>
+            @foreach(var medicine in item.medicines)
+            {
+                <p>@medicine.ToString()</p>
+            }
+        </div>
+        <hr />
+    }
+@*}*@
+

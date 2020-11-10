@@ -1,0 +1,62 @@
+﻿@model IEnumerable<E_Apteka.Models.Medicine>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (User.IsInRole("Administrator"))
+{
+    <br />
+    @Html.ActionLink("Листа на нарачки", "ListOrders", "Medicines", new { @class = "btn btn-primary " })
+}
+<h2>Листа на лекови</h2>
+
+<div>
+
+</div>
+<table class="table" id="medicineTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Producer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @if (User.IsInRole("User"))
+                    {
+                        <a class="btn btn-default" href="@Url.Action("Buy","Cart",new { id=item.Id})">Додади во кошничка</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+@section scripts{
+    <script>
+        $("#medicineTable").DataTable();
+
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+@using E_Apteka.Models;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Кошничка</title>
+</head>
+<body>
+
+    <h3>Кошничка</h3>
+    <table cellpadding="2" cellspacing="2" border="1" class="table table-striped">
+        <tr>
+            <th>Опција</th>
+            <th>Име на лек</th>
+            <th>Производител</th>
+            <th>Цена</th>
+            <th>Количина</th>
+            <th>Вкупно</th>
+        </tr>
+        @foreach (Item item in (List<Item>)Session["cart"])
+        {
+            <tr>
+                <td><a class="btn btn-danger" href="@Url.Action("Remove", "Cart", new { id = item.medicine.Id })">Избриши</a></td>
+                <td>@item.medicine.Name</td>
+                <td>@item.medicine.Producer</td>
+                <td>@item.medicine.Price</td>
+                <td>@item.Quantity</td>
+                <td>@(item.medicine.Price * item.Quantity)</td>
+            </tr>
+        }
+        <tr>
+            <td align="right" colspan="5">Вкупно за плаќање:</td>
+            <td>
+                @{
+                    List<Item> cart = (List<Item>)Session["cart"];
+                    var total = cart.Sum(item => item.medicine.Price * item.Quantity);
+                }
+                @total
+            </td>
+        </tr>
+    </table>
+    <br>    
+            <a class="btn btn-default" href="@Url.Action("Index", "Medicines")">Продолжи со купување</a>
+            <a class="btn btn-primary" href="@Url.Action("Naracaj", "Medicines")">Нарачај</a>
+
+
+</body>
+</html>
+
